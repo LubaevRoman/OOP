@@ -37,6 +37,12 @@ class Student:
         Завершенные курсы" {self.finished_courses}'''
         return result
 
+    def __lt__(self, other):
+        if not isinstance(other, Student):
+            print('Это не студент!')
+            return
+        return self.average_grade == other.average_grade
+
 class Lecturer(Mentor):
     def __init__(self, name, surname):
         super().__init__(name, surname)
@@ -52,6 +58,11 @@ class Lecturer(Mentor):
         Фамилия: {self.surname}
         Средняя оценка за лекции: {self.average_value}'''
         return result
+
+    def __lt__(self, other):
+        if not isinstance(other, Lecturer):
+            return 'Это не Лектор!'
+        return self.average_value == other.average_value
 
 class Reviewer(Mentor):
     def __init__(self, name, surname):
@@ -91,13 +102,13 @@ reviewer_2.courses_attached += ['Python, Git']
 #------------------------------------
 
 student_1.rate_lecture(lecturer_1, 'Python, Git', 10)
-student_1.rate_lecture(lecturer_2, 'Python, Git', 7)
+student_1.rate_lecture(lecturer_2, 'Python, Git', 8)
 student_2.rate_lecture(lecturer_1, 'Python, Git', 8)
-student_2.rate_lecture(lecturer_2, 'Python, Git', 9)
+student_2.rate_lecture(lecturer_2, 'Python, Git', 10)
 
-reviewer_1.rate_hw(student_1, 'Python, Git', 8)
+reviewer_1.rate_hw(student_1, 'Python, Git', 9)
 reviewer_1.rate_hw(student_2, 'Python, Git', 10)
-reviewer_2.rate_hw(student_1, 'Python, Git', 7)
+reviewer_2.rate_hw(student_1, 'Python, Git', 10)
 reviewer_2.rate_hw(student_2, 'Python, Git', 9)
 
 print()
@@ -108,10 +119,12 @@ print('___________________________')
 print(f'''Список лекторов:
       {lecturer_1}, 
       {lecturer_2} ''')
+print(lecturer_1.__lt__(lecturer_2))
 print('___________________________')
 print(f'''Список студентов:
       {student_1}, 
       {student_2} ''')
+print(student_1.__lt__(student_2))
 print('---------------------------')
 
 student_list = [student_1, student_2]
